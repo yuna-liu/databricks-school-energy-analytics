@@ -1,35 +1,35 @@
-# School Energy Machine Learning – Data Engineering Foundation
+# Databricks School Energy Analytics (Data Engineering Foundation)
 
 ## Overview
 
-This repository contains the **data engineering foundation** of a school energy analytics project, implemented on **Databricks Lakehouse principles**.
+This project implements a **data engineering foundation for school energy analytics**
+using **Databricks Lakehouse principles**.
 
-The project focuses on **robust ingestion, correct parsing, and proper dimensional modeling** of large-scale energy time-series data, preparing it for downstream analytics and machine learning use cases such as forecasting and anomaly detection.
+The goal of the project is to transform **semi-structured energy text files**
+into **clean, analytics-ready tables**, following a layered architecture
+that supports downstream analytics, BI, and future data science use cases.
+
+The scope of this repository focuses on **data ingestion, modeling, and transformation**. The pipeline follows a **Bronze → Silver** separation with clear responsibilities and traceability.
 
 ---
 
 ## Architecture Overview
 
-**Landing Layer (Volume)**
-- Raw TXT files (immutable)
+The project follows a simplified Lakehouse-style architecture:
 
-**Bronze Layer (Logical)**
-- energy_raw_lines  
-  - file_name  
-  - raw_line  
-  - header_count  
-  - ingestion_time  
+```text
+Raw Files (TXT)
+   ↓
+Volumes (Landing / Bronze)
+   ↓
+Silver Layer
+   - energy_header        (metadata / dimensions)
+   - energy_measurements  (time-series facts)
+   ↓
+Gold Layer
+   - energy_features_long (analytics-ready feature table)
 
-**Silver Layer**
-- energy_header (Dimension Table)
-- energy_measurements (Fact Table)
-
-
-
-
-The pipeline follows a **Bronze → Silver** separation with clear responsibilities and traceability.
-
----
+```
 
 ## Implemented Components
 
@@ -104,25 +104,19 @@ Key design choices:
 
 ---
 
-## Future Work: Machine Learning Roadmap
+## Future Work
+Potential next steps building on this foundation include:
 
-While this repository currently focuses on the data engineering layer, the implemented data model is intentionally designed to support downstream machine learning and advanced analytics.
+- Advanced analytics and KPI development
 
-Planned next steps include:
+- Data quality checks and validation rules
 
-- **Time-series feature engineering**  
-  Lag features, rolling statistics, and calendar-based features derived from Silver fact tables.
+- Aggregated Gold tables for reporting
 
-- **Load forecasting**  
-  Per-building energy demand forecasting using statistical or regression-based models.
+- Feature engineering for time-based analysis
 
-- **Anomaly detection**  
-  Detection of abnormal consumption patterns using residual-based or statistical methods.
-
-- **Experiment tracking**  
-  Integration with MLflow for tracking parameters, metrics, and data versions.
-
-The existing architecture ensures that these extensions can be added **without modifying the ingestion or parsing logic**, preserving data lineage and reproducibility.
+- Machine learning use cases built on top of existing Gold tables
+(e.g. forecasting or anomaly detection)
 
 ---
 
